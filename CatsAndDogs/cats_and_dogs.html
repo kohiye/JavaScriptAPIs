@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Page</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <p id="line"></p>
+    <button id="reroll" onclick="displayImage()" style="display: none;">reroll</button>
+    <div id="buttons">
+        <button onclick="choice(this.value)" value="cat">Cats</button>
+        <button onclick="choice(this.value)" value="dog">Dogs</button>
+        <button onclick="choice(this.value)" value="bird">Birds ?</button>
+    </div>
+    <img id="picture" referrerpolicy="no-referrer" width="500">
+    <p id="fact"></p>
+    <script>
+        var url = new URL(window.location.href);
+        var login = url.searchParams.get("login");
+        var choice;
+        function choice(value){
+            document.getElementById("buttons").style.display = "none";
+            choice = value;
+            document.getElementById("reroll").style.display = "block";
+            displayImage();
+        }
+
+        function displayImage(){
+            var src;
+            switch(choice){
+                case 'cat' : src = 'https://cataas.com/cat?json=true'; break;
+                case 'dog' : src = "https://random.dog/woof.json"; break;
+                case 'bird' : src = "https://cors-anywhere.herokuapp.com/https://bird-api.usingthe.computer/random"; break;
+            }
+            fetch(src)
+            .then(res => res.json())
+            .then(json => {
+                if (json.url){
+                    document.getElementById("picture").src = json.url
+                }else{
+                    document.getElementById("picture").src = json.image
+                }
+            })
+
+            fetch(`https://some-random-api.ml/animal/${choice}`)
+            .then(res => res.json())
+            .then(json => {
+                document.getElementById("fact").innerHTML = json.fact
+            })
+        }
+    </script>
+</body>
+</html>

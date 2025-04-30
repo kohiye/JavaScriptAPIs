@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cats And Dogs</title>
+    <script src="script.js"></script>
+</head>
+<body onload="updateWelcome()">
+    <script>
+        var login;
+        function updateWelcome(){
+            getName()
+                .then((json) => {
+                    login = json.Login
+                    var welcomeLine = `Hello ${login}! Will this do?`;
+                    document.getElementById("welcome").innerHTML = welcomeLine;
+                })
+        }
+        function nextPage(){
+            window.open(`./cats_and_dogs.html?login=${login}`, "_self")
+        }
+    </script>
+    <h1 id="welcome"></h1>
+    <button onclick="updateWelcome()">Reroll</button>
+    <button onclick="nextPage()">Continue</button>
+</body>
+</html>
