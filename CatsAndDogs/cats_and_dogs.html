@@ -19,6 +19,7 @@
     <script>
         var url = new URL(window.location.href);
         var login = url.searchParams.get("login");
+        document.getElementById("line").innerHTML ="Current user: " + login;
         var choice;
         function choice(value){
             document.getElementById("buttons").style.display = "none";
